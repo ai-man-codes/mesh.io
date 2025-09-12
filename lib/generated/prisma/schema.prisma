@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teams     Team[]     @relation("TeamMembers")
+  proposals Proposal[]
+  Team      Team[]
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+
+  leaderId String
+  leader   User   @relation(fields: [leaderId], references: [id])
+
+  eventId String
+  event   String
+
+  members   User[]    @relation("TeamMembers")
+  vacancies Vacancy[]
+}
+
+model Vacancy {
+  id          String   @id @default(cuid())
+  role        String // e.g., "Frontend Dev", "Designer"
+  description String?
+  isOpen      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id])
+
+  proposals Proposal[]
+}
+
+model Proposal {
+  id        String         @id @default(cuid())
+  message   String? // e.g., "I have 2 years experience in React"
+  status    ProposalStatus @default(PENDING)
+  createdAt DateTime       @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  vacancyId String
+  vacancy   Vacancy @relation(fields: [vacancyId], references: [id])
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
