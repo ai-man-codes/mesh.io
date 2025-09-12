@@ -15,26 +15,16 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  teams     Team[]     @relation("TeamMembers")
   proposals Proposal[]
-  Team      Team[]
 }
 
-
-model Team {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  createdAt   DateTime @default(now())
-
-  leaderId String
-  leader   User   @relation(fields: [leaderId], references: [id])
-
-  eventId String
-  event   String
-
-  members   User[]    @relation("TeamMembers")
-  vacancies Vacancy[]
+model Event{
+  id String @id @default(cuid())
+  name String
+  image_url String
+  description String
+  start_date DateTime
+  end_date DateTime
 }
 
 model Vacancy {
@@ -43,9 +33,8 @@ model Vacancy {
   description String?
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
-
+  vacantTill  DateTime  
   teamId String
-  team   Team   @relation(fields: [teamId], references: [id])
 
   proposals Proposal[]
 }

@@ -12,25 +12,7 @@ export default function HomePage() {
           <CrowdCanvas src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png" rows={15} cols={7} />
         </div>
         {/* Navigation */}
-        <nav className="border-b border-border bg-card/50 backdrop-blur-sm">
-          <div className=" mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                  <Users className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-bold text-foreground">Mesh</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <Link href="/signin">
-                  <button className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
-                    Sign In
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
+      
 
         {/* Hero Section */}
         <div className="flex flex-col items-center justify-center">

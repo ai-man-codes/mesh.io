@@ -10,6 +10,7 @@ import {
 
 // import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { Link, Users } from 'lucide-react'
 
 // const geistSans = Geist({
 //   variable: '--font-geist-sans',
@@ -35,8 +36,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`antialiased`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
+          <header className="flex justify-end items-center p-4 gap-4 h-16 min-w-full ">
+            {/* <SignedOut>
               <SignInButton />
               <SignUpButton>
                 <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
@@ -46,7 +47,26 @@ export default function RootLayout({
             </SignedOut>
             <SignedIn>
               <UserButton />
-            </SignedIn>
+            </SignedIn> */}
+              <nav className=" min-w-full border-b border-border bg-card/50 backdrop-blur-sm">
+          <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                  <Users className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold text-foreground">Mesh</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <SignInButton>
+                  <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
+                    Sign In
+                  </div>
+              </SignInButton>
+              </div>
+            </div>
+          </div>
+        </nav>
           </header>
           {children}
         </body>
