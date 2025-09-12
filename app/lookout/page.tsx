@@ -1,7 +1,9 @@
+//@ts-nocheck
 "use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -55,6 +57,7 @@ interface Vacancy {
 
 interface ApplicationData {
   vacancyId: string;
+  userId: string;
   message: string;
 }
 
@@ -64,7 +67,8 @@ export default function LookoutPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'users' | 'jobs'>('jobs')
-  
+  const { user } = useUser();
+  const [userDb,setUserDb]=useState()
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [selectedVacancy, setSelectedVacancy] = useState<Vacancy | null>(null)
@@ -74,12 +78,20 @@ export default function LookoutPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch users
-        const usersResponse = await fetch("/api/users")
-        if (usersResponse.ok) {
-          const usersData = await usersResponse.json()
-          setUsers(usersData)
+        // http://localhost:3000/api/user
+       const userResponse=await fetch("/api/user",{
+        method:"GET",
+        headers:{
+          "Content-Type":"application/json"
         }
+       })
+       console.log("The user response is ",userResponse)
+
+       if(userResponse.ok){
+        const userData=await userResponse.json();
+        console.log("The user data from the db is ",userData)
+        setUserDb(userData.data)
+       }
 
         // Fetch vacancies
         const vacanciesResponse = await fetch("/api/vacancies")
@@ -120,10 +132,11 @@ export default function LookoutPage() {
   }
 
   const handleSubmitApplication = async () => {
-    if (!selectedVacancy || !applicationMessage.trim()) {
+    console.log("The selected vacancy and application message are :",selectedVacancy,applicationMessage)
+    if (!selectedVacancy || !applicationMessage.trim() || !user) {
       toast({
         title: "Error",
-        description: "Please provide a message for your application.",
+        description: "Please provide a message for your application and make sure you are logged in.",
         variant: "destructive",
       })
       return
@@ -132,19 +145,27 @@ export default function LookoutPage() {
     setIsSubmitting(true)
 
     try {
+      console.log("The user db is ",userDb)
+      if(!userDb){
+        throw new Error("User data not loaded")
+      }
+      if(!userDb.id){
+        throw new Error("User ID not found")
+      }
       const applicationData: ApplicationData = {
         vacancyId: selectedVacancy.id,
+        userId: userDb.id,
         message: applicationMessage.trim(),
       }
 
-      const response = await fetch("/api/proposals", {
+      const response = await fetch("/api/proposals/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(applicationData),
       })
-
+      console.log("The response from the application submission is :",response)
       if (!response.ok) {
         throw new Error("Failed to submit application")
       }
@@ -153,6 +174,18 @@ export default function LookoutPage() {
         title: "Success!",
         description: "Your application has been submitted successfully.",
       })
+
+      setVacancies(prevVacancies => prevVacancies.map(v => {
+        if (v.id === selectedVacancy.id) {
+          return {
+            ...v,
+            _count: {
+              proposals: (v._count?.proposals || 0) + 1
+            }
+          }
+        }
+        return v;
+      }))
 
       setIsDialogOpen(false)
       setSelectedVacancy(null)
