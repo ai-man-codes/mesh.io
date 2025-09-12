@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         vacancyId,
         userId,
         message: message || "",
-        createdAt:Date.now().toString()
+        createdAt:new Date().toISOString()
       },
     });
 
