@@ -1,19 +1,23 @@
 import { NextResponse } from "next/server";
-
 import { prisma } from "@/lib/db";
+
 export async function POST(req: Request) {
   try {
-    const { teamId, role, description } = await req.json();
-
-    if (!teamId || !role) {
-      return NextResponse.json({ error: "teamId and role are required" }, { status: 400 });
+    const {  role, description, vacantTill } = await req.json();
+    console.log("the log descripton and vacant till are ",role,description,vacantTill);
+    if (!role) {
+      return NextResponse.json(
+        { error: "teamId and role are required" },
+        { status: 400 }
+      );
     }
 
     const vacancy = await prisma.vacancy.create({
       data: {
-        teamId,
         role,
-        description: description || "",
+        vacantTill,
+        description,
+        isOpen: true,
       },
     });
 

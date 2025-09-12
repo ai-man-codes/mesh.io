@@ -5,10 +5,6 @@ export async function GET() {
   try {
     const vacancies = await prisma.vacancy.findMany({
       where: { isOpen: true },
-      include: {
-        team: true, 
-        proposals: true, 
-      },
       orderBy: {
         createdAt: "desc",
       },

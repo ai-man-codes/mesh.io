@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://neondb_owner:npg_ps7dzaTWxvt9@ep-empty-mountain-adsjj1ai-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 }
 
 model User {
@@ -15,25 +15,16 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  teams     Team[]     @relation("TeamMembers")
   proposals Proposal[]
-  Team      Team[]
 }
 
-model Team {
+model Event {
   id          String   @id @default(cuid())
   name        String
-  description String?
-  createdAt   DateTime @default(now())
-
-  leaderId String
-  leader   User   @relation(fields: [leaderId], references: [id])
-
-  eventId String
-  event   String
-
-  members   User[]    @relation("TeamMembers")
-  vacancies Vacancy[]
+  image_url   String
+  description String
+  start_date  DateTime
+  end_date    DateTime
 }
 
 model Vacancy {
@@ -42,9 +33,7 @@ model Vacancy {
   description String?
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
-
-  teamId String
-  team   Team   @relation(fields: [teamId], references: [id])
+  vacantTill  DateTime
 
   proposals Proposal[]
 }

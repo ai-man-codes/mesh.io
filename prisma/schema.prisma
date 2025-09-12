@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://neondb_owner:npg_ps7dzaTWxvt9@ep-empty-mountain-adsjj1ai-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 }
 
 model User {
@@ -34,7 +34,6 @@ model Vacancy {
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
   vacantTill  DateTime  
-  teamId String
 
   proposals Proposal[]
 }
