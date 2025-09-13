@@ -139,6 +139,7 @@ export default function LookoutPage() {
       })
       return
     }
+    console.log("The user db inside the application submission function is ",userDb)
 
     setIsSubmitting(true)
 
@@ -147,12 +148,9 @@ export default function LookoutPage() {
       if(!userDb){
         throw new Error("User data not loaded")
       }
-      if(!userDb.id){
-        throw new Error("User ID not found")
-      }
       const applicationData: ApplicationData = {
         vacancyId: selectedVacancy.id,
-        userId: userDb.id,
+        userId: userDb,
         message: applicationMessage.trim(),
       }
 

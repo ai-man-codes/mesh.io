@@ -11,17 +11,29 @@ export async function POST(req: NextRequest) {
 
     const user = await currentUser();
     console.log("Current user:", user?.primaryEmailAddress?.emailAddress);
-
-    const { email } = await req.json(); // body from fetch
-    console.log("Email from body:", email);
-
-    const usersDb = await prisma.user.findFirst({
-      where: { email },
+    if(!user){
+        return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+    }
+    if(!user.primaryEmailAddress?.emailAddress){
+        return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+    }
+    let usersDb = await prisma.user.findFirst({
+      where: { email:user?.primaryEmailAddress?.emailAddress },
     });
-
+    console.log("user from db is ",usersDb)
+    if(!usersDb){
+        usersDb=await prisma.user.create({
+            data:{
+                email:user?.primaryEmailAddress?.emailAddress,
+                name:user?.firstName,
+                createdAt:new Date().toISOString(),
+                updatedAt:new Date().toISOString(),
+            }
+        })
+    }
     return NextResponse.json({
       message: "successful",
-      data: usersDb,
+      data: usersDb?.id,
     });
   } catch (error) {
     console.error("Error in /api/user:", error);
