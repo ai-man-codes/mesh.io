@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -32,54 +33,28 @@ import {
 
 export default function DashboardPage() {
   const [notifications] = useState(3)
+  const [vacancies, setVacancies] = useState([])
+  const [proposals, setProposals] = useState([])
+  const user = useUser()
 
-  // Mock user data
-  const user = {
-    name: "Alex Johnson",
-    email: "alex.johnson@stanford.edu",
-    university: "Stanford University",
-    avatar: "/student-avatar.png",
-    skills: ["React", "Python", "UI/UX", "Machine Learning"],
-  }
+  useEffect(() => {
+    const fetchVacancies = async () => {
+      const res = await fetch("/api/vacancies/userCreated")
+      const data = await res.json()
+      console.log("Vacancies data: ",data)
+      setVacancies(data)
+    }
 
-  // Mock data for dashboard
-  const upcomingEvents = [
-    {
-      id: 1,
-      name: "Stanford Hackathon 2024",
-      date: "March 15-17, 2024",
-      location: "Stanford Campus",
-      participants: 250,
-    },
-    {
-      id: 2,
-      name: "AI/ML Challenge",
-      date: "March 22-24, 2024",
-      location: "Virtual",
-      participants: 180,
-    },
-  ]
+    const fetchProposals = async () => {
+      const res = await fetch("/api/proposals/users")
+      const data = await res.json()
+      console.log("Proposals data: ",data)
+      setProposals(data.data.proposals)
+    }
 
-  const recentActivity = [
-    {
-      id: 1,
-      type: "team_invite",
-      message: "Sarah Chen invited you to join 'EcoTrack' team",
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      type: "event_registration",
-      message: "Successfully registered for Stanford Hackathon 2024",
-      time: "1 day ago",
-    },
-    {
-      id: 3,
-      type: "profile_view",
-      message: "Your profile was viewed by 5 people this week",
-      time: "2 days ago",
-    },
-  ]
+    fetchVacancies()
+    fetchProposals()
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">
@@ -128,10 +103,10 @@ export default function DashboardPage() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                      <AvatarImage src={user?.user?.imageUrl || "/placeholder.svg"} alt={user?.user?.fullName || ""} />
                       <AvatarFallback className="bg-primary text-primary-foreground">
-                        {user.name
-                          .split(" ")
+                        {user.user?.fullName
+                          ?.split(" ")
                           .map((n) => n[0])
                           .join("")}
                       </AvatarFallback>
@@ -141,8 +116,8 @@ export default function DashboardPage() {
                 <DropdownMenuContent className="w-56 bg-popover border-border" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none text-popover-foreground">{user.name}</p>
-                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                      <p className="text-sm font-medium leading-none text-popover-foreground">{user.user?.fullName}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.user?.emailAddresses.toString()}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -170,7 +145,7 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back, {user.name.split(" ")[0]}!</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back, {user.user?.fullName}!</h1>
           <p className="text-muted-foreground">Ready to connect with amazing teams and build something incredible?</p>
         </div>
 
@@ -232,61 +207,53 @@ export default function DashboardPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Upcoming Events */}
+            {/* Jobs Created */}
             <Card className="border-border bg-card">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-foreground">Upcoming Events</CardTitle>
-                  <Link href="/event">
+                  <CardTitle className="text-foreground">Jobs Created</CardTitle>
+                  <Link href="/create-job">
                     <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
-                      View all
+                      Create new
                       <ChevronRight className="ml-1 w-4 h-4" />
                     </Button>
                   </Link>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                {upcomingEvents.map((event) => (
-                  <div key={event.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                {vacancies.length>0 && vacancies.map((vacancy: any) => (
+                  <div key={vacancy.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-1">{event.name}</h3>
+                      <h3 className="font-semibold text-foreground mb-1">{vacancy.title}</h3>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {event.date}
-                        </div>
-                        <div className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" />
-                          {event.location}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Users className="w-4 h-4" />
-                          {event.participants} participants
+                          {vacancy.location}
                         </div>
                       </div>
                     </div>
                     <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                      Register
+                      View
                     </Button>
                   </div>
                 ))}
               </CardContent>
             </Card>
 
-            {/* Recent Activity */}
+            {/* Proposals Given */}
             <Card className="border-border bg-card">
               <CardHeader>
-                <CardTitle className="text-foreground">Recent Activity</CardTitle>
+                <CardTitle className="text-foreground">Proposals Given</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-start gap-3 p-3 border border-border rounded-lg">
+                {proposals.map((proposal: any) => (
+                  <div key={proposal.id} className="flex items-start gap-3 p-3 border border-border rounded-lg">
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
                       <Zap className="w-4 h-4 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm text-foreground">{activity.message}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+                      <p className="text-sm text-foreground">{proposal.message}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{new Date(proposal.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
                 ))}
@@ -304,57 +271,22 @@ export default function DashboardPage() {
               <CardContent>
                 <div className="flex items-center gap-3 mb-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                    <AvatarImage src={user?.user?.imageUrl || "/placeholder.svg"} alt={user?.user?.fullName || ""} />
                     <AvatarFallback className="bg-primary text-primary-foreground">
-                      {user.name
-                        .split(" ")
+                      {user.user?.emailAddresses.toString()
+                        ?.split(" ")
                         .map((n) => n[0])
                         .join("")}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-semibold text-foreground">{user.name}</h3>
-                    <p className="text-sm text-muted-foreground">{user.university}</p>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-foreground">Skills</p>
-                  <div className="flex flex-wrap gap-2">
-                    {user.skills.map((skill) => (
-                      <Badge key={skill} variant="secondary" className="bg-secondary/20 text-secondary-foreground">
-                        {skill}
-                      </Badge>
-                    ))}
+                    <h3 className="font-semibold text-foreground">{user.user?.fullName}</h3>
                   </div>
                 </div>
                 <Button className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
                   Edit Profile
                 </Button>
-              </CardContent>
-            </Card>
 
-            {/* Quick Stats */}
-            <Card className="border-border bg-card">
-              <CardHeader>
-                <CardTitle className="text-foreground">Your Stats</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Profile views</span>
-                  <span className="font-semibold text-foreground">24</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Team invites</span>
-                  <span className="font-semibold text-foreground">3</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Events joined</span>
-                  <span className="font-semibold text-foreground">5</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Projects completed</span>
-                  <span className="font-semibold text-foreground">2</span>
-                </div>
               </CardContent>
             </Card>
           </div>
