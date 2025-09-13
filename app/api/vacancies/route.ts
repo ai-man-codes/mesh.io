@@ -9,7 +9,7 @@ export async function GET() {
         createdAt: "desc",
       },
     });
-
+    
     return NextResponse.json(vacancies);
   } catch (err) {
     console.error("Error fetching vacancies:", err);

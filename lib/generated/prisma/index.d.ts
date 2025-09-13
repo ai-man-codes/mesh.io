@@ -1152,10 +1152,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     proposals: number
+    vacancies: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     proposals?: boolean | UserCountOutputTypeCountProposalsArgs
+    vacancies?: boolean | UserCountOutputTypeCountVacanciesArgs
   }
 
   // Custom InputTypes
@@ -1174,6 +1176,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountProposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProposalWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVacanciesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VacancyWhereInput
   }
 
 
@@ -1228,6 +1237,9 @@ export namespace Prisma {
     name: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    Department: string | null
+    Section: string | null
+    Year: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1236,6 +1248,9 @@ export namespace Prisma {
     name: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    Department: string | null
+    Section: string | null
+    Year: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1244,6 +1259,9 @@ export namespace Prisma {
     name: number
     createdAt: number
     updatedAt: number
+    Department: number
+    Section: number
+    Year: number
     _all: number
   }
 
@@ -1254,6 +1272,9 @@ export namespace Prisma {
     name?: true
     createdAt?: true
     updatedAt?: true
+    Department?: true
+    Section?: true
+    Year?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1262,6 +1283,9 @@ export namespace Prisma {
     name?: true
     createdAt?: true
     updatedAt?: true
+    Department?: true
+    Section?: true
+    Year?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1270,6 +1294,9 @@ export namespace Prisma {
     name?: true
     createdAt?: true
     updatedAt?: true
+    Department?: true
+    Section?: true
+    Year?: true
     _all?: true
   }
 
@@ -1351,6 +1378,9 @@ export namespace Prisma {
     name: string | null
     createdAt: Date
     updatedAt: Date
+    Department: string | null
+    Section: string | null
+    Year: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1376,7 +1406,11 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Department?: boolean
+    Section?: boolean
+    Year?: boolean
     proposals?: boolean | User$proposalsArgs<ExtArgs>
+    vacancies?: boolean | User$vacanciesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1386,6 +1420,9 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Department?: boolean
+    Section?: boolean
+    Year?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1394,6 +1431,9 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Department?: boolean
+    Section?: boolean
+    Year?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1402,11 +1442,15 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Department?: boolean
+    Section?: boolean
+    Year?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "Department" | "Section" | "Year", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     proposals?: boolean | User$proposalsArgs<ExtArgs>
+    vacancies?: boolean | User$vacanciesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1416,6 +1460,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       proposals: Prisma.$ProposalPayload<ExtArgs>[]
+      vacancies: Prisma.$VacancyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1423,6 +1468,9 @@ export namespace Prisma {
       name: string | null
       createdAt: Date
       updatedAt: Date
+      Department: string | null
+      Section: string | null
+      Year: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1818,6 +1866,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     proposals<T extends User$proposalsArgs<ExtArgs> = {}>(args?: Subset<T, User$proposalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    vacancies<T extends User$vacanciesArgs<ExtArgs> = {}>(args?: Subset<T, User$vacanciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VacancyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1852,6 +1901,9 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly Department: FieldRef<"User", 'String'>
+    readonly Section: FieldRef<"User", 'String'>
+    readonly Year: FieldRef<"User", 'String'>
   }
     
 
@@ -2261,6 +2313,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProposalScalarFieldEnum | ProposalScalarFieldEnum[]
+  }
+
+  /**
+   * User.vacancies
+   */
+  export type User$vacanciesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vacancy
+     */
+    select?: VacancySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vacancy
+     */
+    omit?: VacancyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VacancyInclude<ExtArgs> | null
+    where?: VacancyWhereInput
+    orderBy?: VacancyOrderByWithRelationInput | VacancyOrderByWithRelationInput[]
+    cursor?: VacancyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VacancyScalarFieldEnum | VacancyScalarFieldEnum[]
   }
 
   /**
@@ -3302,58 +3378,70 @@ export namespace Prisma {
 
   export type VacancyMinAggregateOutputType = {
     id: string | null
+    userId: string | null
     role: string | null
     description: string | null
     isOpen: boolean | null
     createdAt: Date | null
     vacantTill: Date | null
+    vacancy_image: string | null
   }
 
   export type VacancyMaxAggregateOutputType = {
     id: string | null
+    userId: string | null
     role: string | null
     description: string | null
     isOpen: boolean | null
     createdAt: Date | null
     vacantTill: Date | null
+    vacancy_image: string | null
   }
 
   export type VacancyCountAggregateOutputType = {
     id: number
+    userId: number
     role: number
     description: number
     isOpen: number
     createdAt: number
     vacantTill: number
+    vacancy_image: number
     _all: number
   }
 
 
   export type VacancyMinAggregateInputType = {
     id?: true
+    userId?: true
     role?: true
     description?: true
     isOpen?: true
     createdAt?: true
     vacantTill?: true
+    vacancy_image?: true
   }
 
   export type VacancyMaxAggregateInputType = {
     id?: true
+    userId?: true
     role?: true
     description?: true
     isOpen?: true
     createdAt?: true
     vacantTill?: true
+    vacancy_image?: true
   }
 
   export type VacancyCountAggregateInputType = {
     id?: true
+    userId?: true
     role?: true
     description?: true
     isOpen?: true
     createdAt?: true
     vacantTill?: true
+    vacancy_image?: true
     _all?: true
   }
 
@@ -3431,11 +3519,13 @@ export namespace Prisma {
 
   export type VacancyGroupByOutputType = {
     id: string
+    userId: string
     role: string
     description: string | null
     isOpen: boolean
     createdAt: Date
     vacantTill: Date
+    vacancy_image: string
     _count: VacancyCountAggregateOutputType | null
     _min: VacancyMinAggregateOutputType | null
     _max: VacancyMaxAggregateOutputType | null
@@ -3457,62 +3547,81 @@ export namespace Prisma {
 
   export type VacancySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     role?: boolean
     description?: boolean
     isOpen?: boolean
     createdAt?: boolean
     vacantTill?: boolean
+    vacancy_image?: boolean
+    createdby?: boolean | UserDefaultArgs<ExtArgs>
     proposals?: boolean | Vacancy$proposalsArgs<ExtArgs>
     _count?: boolean | VacancyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vacancy"]>
 
   export type VacancySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     role?: boolean
     description?: boolean
     isOpen?: boolean
     createdAt?: boolean
     vacantTill?: boolean
+    vacancy_image?: boolean
+    createdby?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vacancy"]>
 
   export type VacancySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     role?: boolean
     description?: boolean
     isOpen?: boolean
     createdAt?: boolean
     vacantTill?: boolean
+    vacancy_image?: boolean
+    createdby?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vacancy"]>
 
   export type VacancySelectScalar = {
     id?: boolean
+    userId?: boolean
     role?: boolean
     description?: boolean
     isOpen?: boolean
     createdAt?: boolean
     vacantTill?: boolean
+    vacancy_image?: boolean
   }
 
-  export type VacancyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "role" | "description" | "isOpen" | "createdAt" | "vacantTill", ExtArgs["result"]["vacancy"]>
+  export type VacancyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "role" | "description" | "isOpen" | "createdAt" | "vacantTill" | "vacancy_image", ExtArgs["result"]["vacancy"]>
   export type VacancyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdby?: boolean | UserDefaultArgs<ExtArgs>
     proposals?: boolean | Vacancy$proposalsArgs<ExtArgs>
     _count?: boolean | VacancyCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type VacancyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type VacancyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VacancyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdby?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type VacancyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdby?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $VacancyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Vacancy"
     objects: {
+      createdby: Prisma.$UserPayload<ExtArgs>
       proposals: Prisma.$ProposalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      userId: string
       role: string
       description: string | null
       isOpen: boolean
       createdAt: Date
       vacantTill: Date
+      vacancy_image: string
     }, ExtArgs["result"]["vacancy"]>
     composites: {}
   }
@@ -3907,6 +4016,7 @@ export namespace Prisma {
    */
   export interface Prisma__VacancyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdby<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     proposals<T extends Vacancy$proposalsArgs<ExtArgs> = {}>(args?: Subset<T, Vacancy$proposalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3938,11 +4048,13 @@ export namespace Prisma {
    */
   interface VacancyFieldRefs {
     readonly id: FieldRef<"Vacancy", 'String'>
+    readonly userId: FieldRef<"Vacancy", 'String'>
     readonly role: FieldRef<"Vacancy", 'String'>
     readonly description: FieldRef<"Vacancy", 'String'>
     readonly isOpen: FieldRef<"Vacancy", 'Boolean'>
     readonly createdAt: FieldRef<"Vacancy", 'DateTime'>
     readonly vacantTill: FieldRef<"Vacancy", 'DateTime'>
+    readonly vacancy_image: FieldRef<"Vacancy", 'String'>
   }
     
 
@@ -4192,6 +4304,10 @@ export namespace Prisma {
      */
     data: VacancyCreateManyInput | VacancyCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VacancyIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4262,6 +4378,10 @@ export namespace Prisma {
      * Limit how many Vacancies to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VacancyIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5471,7 +5591,10 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    Department: 'Department',
+    Section: 'Section',
+    Year: 'Year'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -5491,11 +5614,13 @@ export namespace Prisma {
 
   export const VacancyScalarFieldEnum: {
     id: 'id',
+    userId: 'userId',
     role: 'role',
     description: 'description',
     isOpen: 'isOpen',
     createdAt: 'createdAt',
-    vacantTill: 'vacantTill'
+    vacantTill: 'vacantTill',
+    vacancy_image: 'vacancy_image'
   };
 
   export type VacancyScalarFieldEnum = (typeof VacancyScalarFieldEnum)[keyof typeof VacancyScalarFieldEnum]
@@ -5617,7 +5742,11 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    Department?: StringNullableFilter<"User"> | string | null
+    Section?: StringNullableFilter<"User"> | string | null
+    Year?: StringNullableFilter<"User"> | string | null
     proposals?: ProposalListRelationFilter
+    vacancies?: VacancyListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5626,7 +5755,11 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Department?: SortOrderInput | SortOrder
+    Section?: SortOrderInput | SortOrder
+    Year?: SortOrderInput | SortOrder
     proposals?: ProposalOrderByRelationAggregateInput
+    vacancies?: VacancyOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5638,7 +5771,11 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    Department?: StringNullableFilter<"User"> | string | null
+    Section?: StringNullableFilter<"User"> | string | null
+    Year?: StringNullableFilter<"User"> | string | null
     proposals?: ProposalListRelationFilter
+    vacancies?: VacancyListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -5647,6 +5784,9 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Department?: SortOrderInput | SortOrder
+    Section?: SortOrderInput | SortOrder
+    Year?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -5661,6 +5801,9 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    Department?: StringNullableWithAggregatesFilter<"User"> | string | null
+    Section?: StringNullableWithAggregatesFilter<"User"> | string | null
+    Year?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type EventWhereInput = {
@@ -5725,21 +5868,27 @@ export namespace Prisma {
     OR?: VacancyWhereInput[]
     NOT?: VacancyWhereInput | VacancyWhereInput[]
     id?: StringFilter<"Vacancy"> | string
+    userId?: StringFilter<"Vacancy"> | string
     role?: StringFilter<"Vacancy"> | string
     description?: StringNullableFilter<"Vacancy"> | string | null
     isOpen?: BoolFilter<"Vacancy"> | boolean
     createdAt?: DateTimeFilter<"Vacancy"> | Date | string
     vacantTill?: DateTimeFilter<"Vacancy"> | Date | string
+    vacancy_image?: StringFilter<"Vacancy"> | string
+    createdby?: XOR<UserScalarRelationFilter, UserWhereInput>
     proposals?: ProposalListRelationFilter
   }
 
   export type VacancyOrderByWithRelationInput = {
     id?: SortOrder
+    userId?: SortOrder
     role?: SortOrder
     description?: SortOrderInput | SortOrder
     isOpen?: SortOrder
     createdAt?: SortOrder
     vacantTill?: SortOrder
+    vacancy_image?: SortOrder
+    createdby?: UserOrderByWithRelationInput
     proposals?: ProposalOrderByRelationAggregateInput
   }
 
@@ -5748,21 +5897,26 @@ export namespace Prisma {
     AND?: VacancyWhereInput | VacancyWhereInput[]
     OR?: VacancyWhereInput[]
     NOT?: VacancyWhereInput | VacancyWhereInput[]
+    userId?: StringFilter<"Vacancy"> | string
     role?: StringFilter<"Vacancy"> | string
     description?: StringNullableFilter<"Vacancy"> | string | null
     isOpen?: BoolFilter<"Vacancy"> | boolean
     createdAt?: DateTimeFilter<"Vacancy"> | Date | string
     vacantTill?: DateTimeFilter<"Vacancy"> | Date | string
+    vacancy_image?: StringFilter<"Vacancy"> | string
+    createdby?: XOR<UserScalarRelationFilter, UserWhereInput>
     proposals?: ProposalListRelationFilter
   }, "id">
 
   export type VacancyOrderByWithAggregationInput = {
     id?: SortOrder
+    userId?: SortOrder
     role?: SortOrder
     description?: SortOrderInput | SortOrder
     isOpen?: SortOrder
     createdAt?: SortOrder
     vacantTill?: SortOrder
+    vacancy_image?: SortOrder
     _count?: VacancyCountOrderByAggregateInput
     _max?: VacancyMaxOrderByAggregateInput
     _min?: VacancyMinOrderByAggregateInput
@@ -5773,11 +5927,13 @@ export namespace Prisma {
     OR?: VacancyScalarWhereWithAggregatesInput[]
     NOT?: VacancyScalarWhereWithAggregatesInput | VacancyScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Vacancy"> | string
+    userId?: StringWithAggregatesFilter<"Vacancy"> | string
     role?: StringWithAggregatesFilter<"Vacancy"> | string
     description?: StringNullableWithAggregatesFilter<"Vacancy"> | string | null
     isOpen?: BoolWithAggregatesFilter<"Vacancy"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Vacancy"> | Date | string
     vacantTill?: DateTimeWithAggregatesFilter<"Vacancy"> | Date | string
+    vacancy_image?: StringWithAggregatesFilter<"Vacancy"> | string
   }
 
   export type ProposalWhereInput = {
@@ -5849,7 +6005,11 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
     proposals?: ProposalCreateNestedManyWithoutUserInput
+    vacancies?: VacancyCreateNestedManyWithoutCreatedbyInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5858,7 +6018,11 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
     proposals?: ProposalUncheckedCreateNestedManyWithoutUserInput
+    vacancies?: VacancyUncheckedCreateNestedManyWithoutCreatedbyInput
   }
 
   export type UserUpdateInput = {
@@ -5867,7 +6031,11 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
     proposals?: ProposalUpdateManyWithoutUserNestedInput
+    vacancies?: VacancyUpdateManyWithoutCreatedbyNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5876,7 +6044,11 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
     proposals?: ProposalUncheckedUpdateManyWithoutUserNestedInput
+    vacancies?: VacancyUncheckedUpdateManyWithoutCreatedbyNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5885,6 +6057,9 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -5893,6 +6068,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -5901,6 +6079,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EventCreateInput = {
@@ -5973,16 +6154,20 @@ export namespace Prisma {
     isOpen?: boolean
     createdAt?: Date | string
     vacantTill: Date | string
+    vacancy_image: string
+    createdby: UserCreateNestedOneWithoutVacanciesInput
     proposals?: ProposalCreateNestedManyWithoutVacancyInput
   }
 
   export type VacancyUncheckedCreateInput = {
     id?: string
+    userId: string
     role: string
     description?: string | null
     isOpen?: boolean
     createdAt?: Date | string
     vacantTill: Date | string
+    vacancy_image: string
     proposals?: ProposalUncheckedCreateNestedManyWithoutVacancyInput
   }
 
@@ -5993,26 +6178,32 @@ export namespace Prisma {
     isOpen?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
+    createdby?: UserUpdateOneRequiredWithoutVacanciesNestedInput
     proposals?: ProposalUpdateManyWithoutVacancyNestedInput
   }
 
   export type VacancyUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isOpen?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
     proposals?: ProposalUncheckedUpdateManyWithoutVacancyNestedInput
   }
 
   export type VacancyCreateManyInput = {
     id?: string
+    userId: string
     role: string
     description?: string | null
     isOpen?: boolean
     createdAt?: Date | string
     vacantTill: Date | string
+    vacancy_image: string
   }
 
   export type VacancyUpdateManyMutationInput = {
@@ -6022,15 +6213,18 @@ export namespace Prisma {
     isOpen?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
   }
 
   export type VacancyUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isOpen?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProposalCreateInput = {
@@ -6141,6 +6335,12 @@ export namespace Prisma {
     none?: ProposalWhereInput
   }
 
+  export type VacancyListRelationFilter = {
+    every?: VacancyWhereInput
+    some?: VacancyWhereInput
+    none?: VacancyWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -6150,12 +6350,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type VacancyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Department?: SortOrder
+    Section?: SortOrder
+    Year?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -6164,6 +6371,9 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Department?: SortOrder
+    Section?: SortOrder
+    Year?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -6172,6 +6382,9 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Department?: SortOrder
+    Section?: SortOrder
+    Year?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -6256,31 +6469,42 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
   export type VacancyCountOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     role?: SortOrder
     description?: SortOrder
     isOpen?: SortOrder
     createdAt?: SortOrder
     vacantTill?: SortOrder
+    vacancy_image?: SortOrder
   }
 
   export type VacancyMaxOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     role?: SortOrder
     description?: SortOrder
     isOpen?: SortOrder
     createdAt?: SortOrder
     vacantTill?: SortOrder
+    vacancy_image?: SortOrder
   }
 
   export type VacancyMinOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     role?: SortOrder
     description?: SortOrder
     isOpen?: SortOrder
     createdAt?: SortOrder
     vacantTill?: SortOrder
+    vacancy_image?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -6296,11 +6520,6 @@ export namespace Prisma {
     in?: $Enums.ProposalStatus[] | ListEnumProposalStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.ProposalStatus[] | ListEnumProposalStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumProposalStatusFilter<$PrismaModel> | $Enums.ProposalStatus
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type VacancyScalarRelationFilter = {
@@ -6352,11 +6571,25 @@ export namespace Prisma {
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
   }
 
+  export type VacancyCreateNestedManyWithoutCreatedbyInput = {
+    create?: XOR<VacancyCreateWithoutCreatedbyInput, VacancyUncheckedCreateWithoutCreatedbyInput> | VacancyCreateWithoutCreatedbyInput[] | VacancyUncheckedCreateWithoutCreatedbyInput[]
+    connectOrCreate?: VacancyCreateOrConnectWithoutCreatedbyInput | VacancyCreateOrConnectWithoutCreatedbyInput[]
+    createMany?: VacancyCreateManyCreatedbyInputEnvelope
+    connect?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+  }
+
   export type ProposalUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ProposalCreateWithoutUserInput, ProposalUncheckedCreateWithoutUserInput> | ProposalCreateWithoutUserInput[] | ProposalUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProposalCreateOrConnectWithoutUserInput | ProposalCreateOrConnectWithoutUserInput[]
     createMany?: ProposalCreateManyUserInputEnvelope
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+  }
+
+  export type VacancyUncheckedCreateNestedManyWithoutCreatedbyInput = {
+    create?: XOR<VacancyCreateWithoutCreatedbyInput, VacancyUncheckedCreateWithoutCreatedbyInput> | VacancyCreateWithoutCreatedbyInput[] | VacancyUncheckedCreateWithoutCreatedbyInput[]
+    connectOrCreate?: VacancyCreateOrConnectWithoutCreatedbyInput | VacancyCreateOrConnectWithoutCreatedbyInput[]
+    createMany?: VacancyCreateManyCreatedbyInputEnvelope
+    connect?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6385,6 +6618,20 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
+  export type VacancyUpdateManyWithoutCreatedbyNestedInput = {
+    create?: XOR<VacancyCreateWithoutCreatedbyInput, VacancyUncheckedCreateWithoutCreatedbyInput> | VacancyCreateWithoutCreatedbyInput[] | VacancyUncheckedCreateWithoutCreatedbyInput[]
+    connectOrCreate?: VacancyCreateOrConnectWithoutCreatedbyInput | VacancyCreateOrConnectWithoutCreatedbyInput[]
+    upsert?: VacancyUpsertWithWhereUniqueWithoutCreatedbyInput | VacancyUpsertWithWhereUniqueWithoutCreatedbyInput[]
+    createMany?: VacancyCreateManyCreatedbyInputEnvelope
+    set?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    disconnect?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    delete?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    connect?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    update?: VacancyUpdateWithWhereUniqueWithoutCreatedbyInput | VacancyUpdateWithWhereUniqueWithoutCreatedbyInput[]
+    updateMany?: VacancyUpdateManyWithWhereWithoutCreatedbyInput | VacancyUpdateManyWithWhereWithoutCreatedbyInput[]
+    deleteMany?: VacancyScalarWhereInput | VacancyScalarWhereInput[]
+  }
+
   export type ProposalUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ProposalCreateWithoutUserInput, ProposalUncheckedCreateWithoutUserInput> | ProposalCreateWithoutUserInput[] | ProposalUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProposalCreateOrConnectWithoutUserInput | ProposalCreateOrConnectWithoutUserInput[]
@@ -6397,6 +6644,26 @@ export namespace Prisma {
     update?: ProposalUpdateWithWhereUniqueWithoutUserInput | ProposalUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ProposalUpdateManyWithWhereWithoutUserInput | ProposalUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+  }
+
+  export type VacancyUncheckedUpdateManyWithoutCreatedbyNestedInput = {
+    create?: XOR<VacancyCreateWithoutCreatedbyInput, VacancyUncheckedCreateWithoutCreatedbyInput> | VacancyCreateWithoutCreatedbyInput[] | VacancyUncheckedCreateWithoutCreatedbyInput[]
+    connectOrCreate?: VacancyCreateOrConnectWithoutCreatedbyInput | VacancyCreateOrConnectWithoutCreatedbyInput[]
+    upsert?: VacancyUpsertWithWhereUniqueWithoutCreatedbyInput | VacancyUpsertWithWhereUniqueWithoutCreatedbyInput[]
+    createMany?: VacancyCreateManyCreatedbyInputEnvelope
+    set?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    disconnect?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    delete?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    connect?: VacancyWhereUniqueInput | VacancyWhereUniqueInput[]
+    update?: VacancyUpdateWithWhereUniqueWithoutCreatedbyInput | VacancyUpdateWithWhereUniqueWithoutCreatedbyInput[]
+    updateMany?: VacancyUpdateManyWithWhereWithoutCreatedbyInput | VacancyUpdateManyWithWhereWithoutCreatedbyInput[]
+    deleteMany?: VacancyScalarWhereInput | VacancyScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutVacanciesInput = {
+    create?: XOR<UserCreateWithoutVacanciesInput, UserUncheckedCreateWithoutVacanciesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVacanciesInput
+    connect?: UserWhereUniqueInput
   }
 
   export type ProposalCreateNestedManyWithoutVacancyInput = {
@@ -6415,6 +6682,14 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutVacanciesNestedInput = {
+    create?: XOR<UserCreateWithoutVacanciesInput, UserUncheckedCreateWithoutVacanciesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVacanciesInput
+    upsert?: UserUpsertWithoutVacanciesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVacanciesInput, UserUpdateWithoutVacanciesInput>, UserUncheckedUpdateWithoutVacanciesInput>
   }
 
   export type ProposalUpdateManyWithoutVacancyNestedInput = {
@@ -6642,6 +6917,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type VacancyCreateWithoutCreatedbyInput = {
+    id?: string
+    role: string
+    description?: string | null
+    isOpen?: boolean
+    createdAt?: Date | string
+    vacantTill: Date | string
+    vacancy_image: string
+    proposals?: ProposalCreateNestedManyWithoutVacancyInput
+  }
+
+  export type VacancyUncheckedCreateWithoutCreatedbyInput = {
+    id?: string
+    role: string
+    description?: string | null
+    isOpen?: boolean
+    createdAt?: Date | string
+    vacantTill: Date | string
+    vacancy_image: string
+    proposals?: ProposalUncheckedCreateNestedManyWithoutVacancyInput
+  }
+
+  export type VacancyCreateOrConnectWithoutCreatedbyInput = {
+    where: VacancyWhereUniqueInput
+    create: XOR<VacancyCreateWithoutCreatedbyInput, VacancyUncheckedCreateWithoutCreatedbyInput>
+  }
+
+  export type VacancyCreateManyCreatedbyInputEnvelope = {
+    data: VacancyCreateManyCreatedbyInput | VacancyCreateManyCreatedbyInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProposalUpsertWithWhereUniqueWithoutUserInput = {
     where: ProposalWhereUniqueInput
     update: XOR<ProposalUpdateWithoutUserInput, ProposalUncheckedUpdateWithoutUserInput>
@@ -6670,6 +6977,65 @@ export namespace Prisma {
     vacancyId?: StringFilter<"Proposal"> | string
   }
 
+  export type VacancyUpsertWithWhereUniqueWithoutCreatedbyInput = {
+    where: VacancyWhereUniqueInput
+    update: XOR<VacancyUpdateWithoutCreatedbyInput, VacancyUncheckedUpdateWithoutCreatedbyInput>
+    create: XOR<VacancyCreateWithoutCreatedbyInput, VacancyUncheckedCreateWithoutCreatedbyInput>
+  }
+
+  export type VacancyUpdateWithWhereUniqueWithoutCreatedbyInput = {
+    where: VacancyWhereUniqueInput
+    data: XOR<VacancyUpdateWithoutCreatedbyInput, VacancyUncheckedUpdateWithoutCreatedbyInput>
+  }
+
+  export type VacancyUpdateManyWithWhereWithoutCreatedbyInput = {
+    where: VacancyScalarWhereInput
+    data: XOR<VacancyUpdateManyMutationInput, VacancyUncheckedUpdateManyWithoutCreatedbyInput>
+  }
+
+  export type VacancyScalarWhereInput = {
+    AND?: VacancyScalarWhereInput | VacancyScalarWhereInput[]
+    OR?: VacancyScalarWhereInput[]
+    NOT?: VacancyScalarWhereInput | VacancyScalarWhereInput[]
+    id?: StringFilter<"Vacancy"> | string
+    userId?: StringFilter<"Vacancy"> | string
+    role?: StringFilter<"Vacancy"> | string
+    description?: StringNullableFilter<"Vacancy"> | string | null
+    isOpen?: BoolFilter<"Vacancy"> | boolean
+    createdAt?: DateTimeFilter<"Vacancy"> | Date | string
+    vacantTill?: DateTimeFilter<"Vacancy"> | Date | string
+    vacancy_image?: StringFilter<"Vacancy"> | string
+  }
+
+  export type UserCreateWithoutVacanciesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
+    proposals?: ProposalCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutVacanciesInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
+    proposals?: ProposalUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutVacanciesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVacanciesInput, UserUncheckedCreateWithoutVacanciesInput>
+  }
+
   export type ProposalCreateWithoutVacancyInput = {
     id?: string
     message?: string | null
@@ -6696,6 +7062,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserUpsertWithoutVacanciesInput = {
+    update: XOR<UserUpdateWithoutVacanciesInput, UserUncheckedUpdateWithoutVacanciesInput>
+    create: XOR<UserCreateWithoutVacanciesInput, UserUncheckedCreateWithoutVacanciesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVacanciesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVacanciesInput, UserUncheckedUpdateWithoutVacanciesInput>
+  }
+
+  export type UserUpdateWithoutVacanciesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
+    proposals?: ProposalUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVacanciesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
+    proposals?: ProposalUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type ProposalUpsertWithWhereUniqueWithoutVacancyInput = {
     where: ProposalWhereUniqueInput
     update: XOR<ProposalUpdateWithoutVacancyInput, ProposalUncheckedUpdateWithoutVacancyInput>
@@ -6718,6 +7119,10 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
+    vacancies?: VacancyCreateNestedManyWithoutCreatedbyInput
   }
 
   export type UserUncheckedCreateWithoutProposalsInput = {
@@ -6726,6 +7131,10 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Department?: string | null
+    Section?: string | null
+    Year?: string | null
+    vacancies?: VacancyUncheckedCreateNestedManyWithoutCreatedbyInput
   }
 
   export type UserCreateOrConnectWithoutProposalsInput = {
@@ -6740,15 +7149,19 @@ export namespace Prisma {
     isOpen?: boolean
     createdAt?: Date | string
     vacantTill: Date | string
+    vacancy_image: string
+    createdby: UserCreateNestedOneWithoutVacanciesInput
   }
 
   export type VacancyUncheckedCreateWithoutProposalsInput = {
     id?: string
+    userId: string
     role: string
     description?: string | null
     isOpen?: boolean
     createdAt?: Date | string
     vacantTill: Date | string
+    vacancy_image: string
   }
 
   export type VacancyCreateOrConnectWithoutProposalsInput = {
@@ -6773,6 +7186,10 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
+    vacancies?: VacancyUpdateManyWithoutCreatedbyNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProposalsInput = {
@@ -6781,6 +7198,10 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Department?: NullableStringFieldUpdateOperationsInput | string | null
+    Section?: NullableStringFieldUpdateOperationsInput | string | null
+    Year?: NullableStringFieldUpdateOperationsInput | string | null
+    vacancies?: VacancyUncheckedUpdateManyWithoutCreatedbyNestedInput
   }
 
   export type VacancyUpsertWithoutProposalsInput = {
@@ -6801,15 +7222,19 @@ export namespace Prisma {
     isOpen?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
+    createdby?: UserUpdateOneRequiredWithoutVacanciesNestedInput
   }
 
   export type VacancyUncheckedUpdateWithoutProposalsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isOpen?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProposalCreateManyUserInput = {
@@ -6818,6 +7243,16 @@ export namespace Prisma {
     status?: $Enums.ProposalStatus
     createdAt?: Date | string
     vacancyId: string
+  }
+
+  export type VacancyCreateManyCreatedbyInput = {
+    id?: string
+    role: string
+    description?: string | null
+    isOpen?: boolean
+    createdAt?: Date | string
+    vacantTill: Date | string
+    vacancy_image: string
   }
 
   export type ProposalUpdateWithoutUserInput = {
@@ -6842,6 +7277,38 @@ export namespace Prisma {
     status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     vacancyId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type VacancyUpdateWithoutCreatedbyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isOpen?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
+    proposals?: ProposalUpdateManyWithoutVacancyNestedInput
+  }
+
+  export type VacancyUncheckedUpdateWithoutCreatedbyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isOpen?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
+    proposals?: ProposalUncheckedUpdateManyWithoutVacancyNestedInput
+  }
+
+  export type VacancyUncheckedUpdateManyWithoutCreatedbyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isOpen?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacantTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    vacancy_image?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProposalCreateManyVacancyInput = {

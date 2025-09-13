@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
 import { useRouter } from "next/navigation"
-
+import { useUser } from "@clerk/nextjs"
 import { useState } from "react"
 import type React from "react"
 
@@ -19,6 +19,8 @@ interface FormData {
 export default function CreateJobPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [date, setDate] = useState<Date>()
+  const user=useUser()
+
   const [formData, setFormData] = useState<FormData>({
     role: "",
     description: "",
@@ -33,6 +35,12 @@ export default function CreateJobPage() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
+      const usergetResponse=(await(await fetch("/api/user",{
+        method:"GET",
+        headers:{
+          "Content-Type":"application/json"
+        }
+      })).json()).data.id
       const response = await fetch("/api/vacancies/create", {
         method: "POST",
         headers: {
@@ -42,6 +50,8 @@ export default function CreateJobPage() {
           role: formData.role,
           description: formData.description,
           vacantTill: date,
+          vacancies_url: usergetResponse ,
+          createdBy:usergetResponse
         }),
       });
       if (response.ok) {

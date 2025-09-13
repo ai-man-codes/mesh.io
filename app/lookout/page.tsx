@@ -48,6 +48,7 @@ interface Vacancy {
   createdAt: string;
   vacantTill: string;
   teamId: string;
+  vacancy_image:string;
   _count?: {
     proposals: number;
   };
@@ -326,7 +327,8 @@ export default function LookoutPage() {
                 <CardHeader className="pb-4">
                   <div className="flex items-start gap-4">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Briefcase className="w-8 h-8 text-primary" />
+                      {/* <Briefcase className="w-8 h-8 text-primary" /> */}
+                      <img src={vacancy.vacancy_image}/>
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-lg text-foreground truncate">{vacancy.role}</h3>

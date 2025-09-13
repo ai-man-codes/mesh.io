@@ -14,8 +14,11 @@ model User {
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  Department    String?
+  Section       String?
+  Year          String?
   proposals Proposal[]
+  vacancies Vacancy[]
 }
 
 model Event{
@@ -29,11 +32,14 @@ model Event{
 
 model Vacancy {
   id          String   @id @default(cuid())
+  createdby   User      @relation(fields: [userId], references: [id])
+  userId      String
   role        String // e.g., "Frontend Dev", "Designer"
   description String?
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
   vacantTill  DateTime  
+  vacancy_image String
 
   proposals Proposal[]
 }
