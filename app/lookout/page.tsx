@@ -1,9 +1,7 @@
-//@ts-nocheck
 "use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -67,7 +65,6 @@ export default function LookoutPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'users' | 'jobs'>('jobs')
-  const { user } = useUser();
   const [userDb,setUserDb]=useState()
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -80,10 +77,11 @@ export default function LookoutPage() {
       try {
         // http://localhost:3000/api/user
        const userResponse=await fetch("/api/user",{
-        method:"GET",
+        method:"POST",
         headers:{
           "Content-Type":"application/json"
-        }
+        },
+        credentials:"include",
        })
        console.log("The user response is ",userResponse)
 
@@ -133,7 +131,7 @@ export default function LookoutPage() {
 
   const handleSubmitApplication = async () => {
     console.log("The selected vacancy and application message are :",selectedVacancy,applicationMessage)
-    if (!selectedVacancy || !applicationMessage.trim() || !user) {
+    if (!selectedVacancy || !applicationMessage.trim()) {
       toast({
         title: "Error",
         description: "Please provide a message for your application and make sure you are logged in.",

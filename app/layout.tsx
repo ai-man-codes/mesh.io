@@ -59,11 +59,21 @@ export default function RootLayout({
                 <span className="text-xl font-bold text-foreground">Mesh</span>
               </div>
               <div className="flex items-center gap-4">
+                <SignedOut>
                 <SignInButton>
                   <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
                     Sign In
                   </div>
               </SignInButton>
+                 <SignUpButton>
+                  <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
+                    Sign Up
+                  </div>
+              </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
               </div>
             </div>
           </div>
