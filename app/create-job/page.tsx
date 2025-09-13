@@ -50,7 +50,7 @@ export default function CreateJobPage() {
           role: formData.role,
           description: formData.description,
           vacantTill: date,
-          vacancies_url: usergetResponse ,
+          vacancies_url: user.user?.imageUrl,
           createdBy:usergetResponse
         }),
       });

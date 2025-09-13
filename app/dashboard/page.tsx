@@ -288,9 +288,7 @@ export default function DashboardPage() {
 
                       </div>
                     </div>
-                    <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                      View
-                    </Button>
+              
                   </div>
                 ))}
               </CardContent>
