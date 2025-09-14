@@ -39,7 +39,7 @@ model Vacancy {
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
   vacantTill  DateTime?
-
+  vacancy_image String?
   proposals Proposal[]
 }
 

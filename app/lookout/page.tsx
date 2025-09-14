@@ -96,6 +96,7 @@ export default function LookoutPage() {
         const vacanciesResponse = await fetch("/api/vacancies")
         if (vacanciesResponse.ok) {
           const vacanciesData = await vacanciesResponse.json()
+          console.log("The vacancies data is ",vacanciesData)
           setVacancies(vacanciesData)
         }
       } catch (error) {
