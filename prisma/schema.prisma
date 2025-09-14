@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -12,9 +11,11 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  
+  
   proposals Proposal[]
 }
 
@@ -33,7 +34,7 @@ model Vacancy {
   description String?
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
-  vacantTill  DateTime  
+  vacantTill  DateTime
 
   proposals Proposal[]
 }

@@ -8,20 +8,9 @@ import {
   UserButton,
 } from '@clerk/nextjs'
 
-// import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { Link, Users } from 'lucide-react'
 import { Toaster } from '@/components/ui/toaster'
-
-// const geistSans = Geist({
-//   variable: '--font-geist-sans',
-//   subsets: ['latin'],
-// })
-
-// const geistMono = Geist_Mono({
-//   variable: '--font-geist-mono',
-//   subsets: ['latin'],
-// })
 
 export const metadata: Metadata = {
   title: 'Clerk Next.js Quickstart',
@@ -34,55 +23,46 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
+    //@ts-ignore
     <ClerkProvider>
       <html lang="en">
         <body className={`antialiased`}>
           <header className="flex justify-end items-center p-4 gap-4 h-16 min-w-full ">
-            {/* <SignedOut>
-              <SignInButton />
-              <SignUpButton>
-                <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                  Sign Up
-                </button>
-              </SignUpButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn> */}
-              <nav className=" min-w-full border-b border-border bg-card/50 backdrop-blur-sm">
-          <div className=" mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                  <Users className="w-5 h-5 text-primary-foreground" />
+            <nav className=" min-w-full border-b border-border bg-card/50 backdrop-blur-sm">
+              <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                      <Users className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <span className="text-xl font-bold text-foreground">Mesh</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    {/* @ts-ignore */}
+                    <SignedOut>
+                      <SignInButton>
+                        <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
+                          Sign In
+                        </div>
+                      </SignInButton>
+                      <SignUpButton>
+                        <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
+                          Sign Up
+                        </div>
+                      </SignUpButton>
+                    </SignedOut>
+                    {/* @ts-ignore */}
+                    <SignedIn>
+                      <UserButton />
+                    </SignedIn>
+                  </div>
                 </div>
-                <span className="text-xl font-bold text-foreground">Mesh</span>
               </div>
-              <div className="flex items-center gap-4">
-                <SignedOut>
-                <SignInButton>
-                  <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
-                    Sign In
-                  </div>
-              </SignInButton>
-                 <SignUpButton>
-                  <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
-                    Sign Up
-                  </div>
-              </SignUpButton>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-              </div>
-            </div>
-          </div>
-        </nav>
+            </nav>
           </header>
           {children}
-          <Toaster/>
+          <Toaster />
         </body>
-
       </html>
     </ClerkProvider>
   )
