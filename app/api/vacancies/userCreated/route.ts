@@ -1,17 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
-
-export async function GET() {
+import { currentUser } from "@clerk/nextjs/server";
+export async function POST(req:NextRequest) {
   try {
-    const { userId } =await auth();
-
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
+    // const { userId } =await auth();
+    // // const user=await currentUser()
+    // if(!user?.emailAddresses[0].emailAddress){
+    //   return new NextResponse("Un")
+    // }
+  
+    const {userId}=await req.json()
+    // console.log("r3222222222222222",userId);
     const vacancies = await prisma.vacancy.findMany({
-      where: { id: userId },
+      where: { userId},
       orderBy: {
         createdAt: "desc",
       },

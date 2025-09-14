@@ -38,6 +38,9 @@ interface User {
   email: string;
   createdAt: string;
   updatedAt: string;
+  Section: string | null;
+  Year: string | null;
+  Department: string | null;
 }
 
 interface Vacancy {
@@ -48,6 +51,8 @@ interface Vacancy {
   createdAt: string;
   vacantTill: string;
   teamId: string;
+  vacancy_image:string;
+  createdby: User;
   _count?: {
     proposals: number;
   };
@@ -77,19 +82,13 @@ export default function LookoutPage() {
       try {
         // http://localhost:3000/api/user
        const userResponse=await fetch("/api/user",{
-        method:"POST",
+        method:"GET",
         headers:{
           "Content-Type":"application/json"
         },
         credentials:"include",
        })
-       console.log("The user response is ",userResponse)
-
-       if(userResponse.ok){
-        const userData=await userResponse.json();
-        console.log("The user data from the db is ",userData)
-        setUserDb(userData.data)
-       }
+       
 
         // Fetch vacancies
         const vacanciesResponse = await fetch("/api/vacancies")
@@ -130,7 +129,18 @@ export default function LookoutPage() {
   }
 
   const handleSubmitApplication = async () => {
-    console.log("The selected vacancy and application message are :",selectedVacancy,applicationMessage)
+    
+    const response=await fetch("/api/proposals/create",{
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        vacancyId: selectedVacancy?.id,
+        userId: userDb,
+        message: applicationMessage.trim(),
+      }),
+    })
     if (!selectedVacancy || !applicationMessage.trim()) {
       toast({
         title: "Error",
@@ -139,7 +149,7 @@ export default function LookoutPage() {
       })
       return
     }
-    console.log("The user db inside the application submission function is ",userDb)
+    
 
     setIsSubmitting(true)
 
@@ -203,6 +213,7 @@ export default function LookoutPage() {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
+
     })
   }
 
@@ -326,10 +337,27 @@ export default function LookoutPage() {
                 <CardHeader className="pb-4">
                   <div className="flex items-start gap-4">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Briefcase className="w-8 h-8 text-primary" />
+                      {/* <Briefcase className="w-8 h-8 text-primary" /> */}
+                      <img src={vacancy.vacancy_image}/>
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-lg text-foreground truncate">{vacancy.role}</h3>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                        <Mail className="w-4 h-4" />
+                        {vacancy.createdby.email}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                        <Users className="w-4 h-4" />
+                        {vacancy.createdby.Section}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                        <Calendar className="w-4 h-4" />
+                        {vacancy.createdby.Year}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                        <Briefcase className="w-4 h-4" />
+                        {vacancy.createdby.Department}
+                      </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                         <Calendar className="w-4 h-4" />
                         Posted {formatDate(vacancy.createdAt)}

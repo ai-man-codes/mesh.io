@@ -8,8 +8,19 @@ export async function GET() {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        createdby: {
+          select: {
+            email: true,
+            Section: true,
+    
+            Year: true,
+            Department: true,
+          },
+        },
+      },
     });
-
+    
     return NextResponse.json(vacancies);
   } catch (err) {
     console.error("Error fetching vacancies:", err);
