@@ -37,6 +37,11 @@ async function main() {
       isOpen: true,
       vacantTill: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), // 2 weeks from now
       // teamId: 'team1',
+      createdby: {
+        connect: {
+          id: user1.id,
+        },
+      },
     },
   });
 
@@ -46,6 +51,12 @@ async function main() {
       description: 'Come work on our cutting-edge backend systems. Knowledge of Node.js and PostgreSQL is required.',
       isOpen: true,
       vacantTill: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 1 month from now
+      createdby: {
+        connect: {
+          id: user1.id,
+        },
+      },
+
       // teamId: 'team1',
     },
   });
@@ -57,6 +68,12 @@ async function main() {
       isOpen: true,
       vacantTill: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 1 week from now
       // teamId: 'team2',
+      createdby: {
+        connect: {
+          id: user1.id,
+        },
+      },
+
     },
   });
 
@@ -67,6 +84,11 @@ async function main() {
       isOpen: false, // This one is closed
       vacantTill: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5), // Expired 5 days ago
       // teamId: 'team2',
+      createdby: {
+        connect: {
+          id: user1.id,
+        },
+      },
     },
   });
 

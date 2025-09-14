@@ -10,7 +10,7 @@ export async function GET() {
 
     if (!user) {
       // not logged in
-      return NextResponse.redirect(new URL("/signin", "http://localhost:3000"));
+      return NextResponse.redirect(new URL("/signin"));
     }
 
     const userInDb = await prisma.user.findUnique({
@@ -20,12 +20,12 @@ export async function GET() {
     });
 
     if (userInDb) {
-      return NextResponse.redirect(new URL("/", "http://localhost:3000"));
+      return NextResponse.redirect(new URL("/"));
     } else {
-      return NextResponse.redirect(new URL("/signup", "http://localhost:3000"));
+      return NextResponse.redirect(new URL("/signup"));
     }
   } catch (err) {
     console.error("Error checking user:", err);
-    return NextResponse.redirect(new URL("/signin", "http://localhost:3000"));
+    return NextResponse.redirect(new URL("/signin"));
   }
 }

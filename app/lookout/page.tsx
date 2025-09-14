@@ -88,6 +88,8 @@ export default function LookoutPage() {
         },
         credentials:"include",
        })
+
+       setUserDb((await userResponse.json()).data.id)
        
 
         // Fetch vacancies

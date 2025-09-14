@@ -14,7 +14,9 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  Department    String?
+  Section       String?
+  Year          String?
   proposals Proposal[]
   vacancies Vacancy[]
 }
@@ -36,7 +38,7 @@ model Vacancy {
   description String?
   isOpen      Boolean  @default(true)
   createdAt   DateTime @default(now())
-  vacantTill  DateTime  
+  vacantTill  DateTime?
 
   proposals Proposal[]
 }
