@@ -9,8 +9,9 @@ import {
 } from '@clerk/nextjs'
 
 import './globals.css'
-import { Link, Users } from 'lucide-react'
+import { Users } from 'lucide-react'
 import { Toaster } from '@/components/ui/toaster'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Clerk Next.js Quickstart',
@@ -22,6 +23,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
+
+
   return (
     //@ts-ignore
     <ClerkProvider>
@@ -32,10 +36,24 @@ export default function RootLayout({
               <div className=" mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                      <Users className="w-5 h-5 text-primary-foreground" />
-                    </div>
-                    <span className="text-xl font-bold text-foreground">Mesh</span>
+                    <Link href="/" className='flex items-center gap-2'>
+                      <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                        <Users className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <span className="text-xl font-bold text-foreground">Mesh</span>
+                    </Link>
+
+                  </div>
+                  <div className="flex-grow flex items-center justify-center gap-3">
+                    <Link href="/event" className=''>
+                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-full px-4 py-2">Events</span>
+                    </Link>
+                    <Link href="/dashboard">
+                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-full px-4 py-2">Dashboard</span>
+                    </Link>
+                    <Link href="/lookout">
+                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-full px-4 py-2">Opportunities</span>
+                    </Link>
                   </div>
                   <div className="flex items-center gap-4">
                     {/* @ts-ignore */}
@@ -45,11 +63,11 @@ export default function RootLayout({
                           Sign In
                         </div>
                       </SignInButton>
-                      <SignUpButton>
+                      {/* <SignUpButton>
                         <div className="text-white px-6 cursor-pointer rounded-full py-2 bg-primary hover:bg-transparent hover:text-primary hover:border-primary border border-primary transition-all duration-300">
                           Sign Up
                         </div>
-                      </SignUpButton>
+                      </SignUpButton> */}
                     </SignedOut>
                     {/* @ts-ignore */}
                     <SignedIn>
