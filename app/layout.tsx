@@ -12,6 +12,7 @@ import './globals.css'
 import { Users } from 'lucide-react'
 import { Toaster } from '@/components/ui/toaster'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Clerk Next.js Quickstart',
@@ -46,13 +47,19 @@ export default function RootLayout({
                   </div>
                   <div className="flex-grow flex items-center justify-center gap-3">
                     <Link href="/event" className=''>
-                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-3xl px-4 py-2">Events</span>
+                      <Button variant="outline" size="sm">
+                        Events
+                      </Button>
                     </Link>
                     <Link href="/dashboard">
-                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-3xl px-4 py-2">Dashboard</span>
+                      <Button variant="outline" size="sm">
+                        Dashboard
+                      </Button>
                     </Link>
                     <Link href="/lookout">
-                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-3xl px-4 py-2">Opportunities</span>
+                      <Button variant="outline" size="sm">
+                        Opportunities
+                      </Button>
                     </Link>
                   </div>
                   <div className="flex items-center gap-4">

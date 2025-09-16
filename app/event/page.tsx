@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, Plus } from "lucide-react";
 
 export default async function EventPage() {
   const events = await prisma.event.findMany();
@@ -10,13 +10,13 @@ export default async function EventPage() {
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Events</h1>
-        <Button asChild>
+        <h1 className="text-3xl font-bold text-foreground">Events</h1>
           <Link href="/create-event">
-            <div className="rounded-full bg-primary text-primary-foreground">
+            <Button variant="outline">
+              <Plus className="w-4 h-4" />  
               Create Event
-            </div></Link>
-        </Button>
+            </Button>
+          </Link>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map((event) => (

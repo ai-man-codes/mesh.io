@@ -15,8 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,6 +42,14 @@ import {
   Target,
 } from "lucide-react"
 
+const Departments = [
+  "CSE", "IT", "CSIT", "ECE", "ELCE", "ME", "CS", "MCA", "MBA", "CSE-AI", "CSE-AIML"
+]
+
+const Sections = ["A", "B", "C", "D", "E"]
+
+const Years = ["1st", "2nd", "3rd", "4th"]
+
 export default function DashboardPage() {
   const [notifications] = useState(3)
   const [vacancies, setVacancies] = useState([])
@@ -54,15 +63,15 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchVacancies = async () => {
-        const request=(await(await fetch("/api/user",{
-            method:"GET",
-            headers:{
-              "Content-Type":"application/json"
-            },
-          })).json()).data.id
+      const request = (await (await fetch("/api/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })).json()).data.id
       console.log("User ID: ", request)
-      const res = await fetch("/api/vacancies/userCreated",{
-        method:"POST",
+      const res = await fetch("/api/vacancies/userCreated", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -73,9 +82,9 @@ export default function DashboardPage() {
       const data = await res.json()
       console.log("Vacancies data: ", data)
       setVacancies(data.data)
-      console.log("the vacancies ffrom the state is ",vacancies)
-      
-      
+      console.log("the vacancies ffrom the state is ", vacancies)
+
+
     }
     const fetchUser = async () => {
       const res = await fetch("/api/user")
@@ -115,10 +124,12 @@ export default function DashboardPage() {
     setIsEditDialogOpen(false)
   }
 
+
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      
+
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -137,9 +148,9 @@ export default function DashboardPage() {
                   <Search className="w-5 h-5 text-primary" />
                 </div>
                 <CardTitle className="text-lg text-foreground">Find Teammates</CardTitle>
-                <CardDescription className="text-muted-foreground">
+                {/* <CardDescription className="text-muted-foreground">
                   Discover talented students for your next project
-                </CardDescription>
+                </CardDescription> */}
               </CardHeader>
             </Card>
           </Link>
@@ -151,9 +162,9 @@ export default function DashboardPage() {
                   <Calendar className="w-5 h-5 text-primary" />
                 </div>
                 <CardTitle className="text-lg text-foreground">Browse Events</CardTitle>
-                <CardDescription className="text-muted-foreground">
+                {/* <CardDescription className="text-muted-foreground">
                   Find hackathons and competitions to join
-                </CardDescription>
+                </CardDescription> */}
               </CardHeader>
             </Card>
           </Link>
@@ -165,9 +176,9 @@ export default function DashboardPage() {
                   <Plus className="w-5 h-5 text-primary" />
                 </div>
                 <CardTitle className="text-lg text-foreground">Post Opportunity</CardTitle>
-                <CardDescription className="text-muted-foreground">
+                {/* <CardDescription className="text-muted-foreground">
                   Create a team or find specific roles
-                </CardDescription>
+                </CardDescription> */}
               </CardHeader>
             </Card>
           </Link>
@@ -178,7 +189,7 @@ export default function DashboardPage() {
                 <Target className="w-5 h-5 text-primary" />
               </div>
               <CardTitle className="text-lg text-foreground">Your Profile</CardTitle>
-              <CardDescription className="text-muted-foreground">Update skills and preferences</CardDescription>
+              {/* <CardDescription className="text-muted-foreground">Update skills and preferences</CardDescription> */}
             </CardHeader>
           </Card>
         </div>
@@ -192,7 +203,7 @@ export default function DashboardPage() {
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-foreground">Jobs Created</CardTitle>
                   <Link href="/create-job">
-                    <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
+                    <Button variant="outline">
                       Create new
                       <ChevronRight className="ml-1 w-4 h-4" />
                     </Button>
@@ -208,7 +219,7 @@ export default function DashboardPage() {
 
                       </div>
                     </div>
-              
+
                   </div>
                 ))}
               </CardContent>
@@ -290,37 +301,55 @@ export default function DashboardPage() {
                         <Label htmlFor="department" className="text-right">
                           Department
                         </Label>
-                        <Input
-                          id="department"
-                          value={department}
-                          onChange={(e) => setDepartment(e.target.value)}
-                          className="col-span-3"
-                        />
+                        <Select value={department} onValueChange={setDepartment}>
+                          <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Select a department" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Departments.map((dept) => (
+                              <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="section" className="text-right">
                           Section
                         </Label>
-                        <Input
-                          id="section"
-                          value={section}
-                          onChange={(e) => setSection(e.target.value)}
-                          className="col-span-3"
-                        />
+                        <Select value={section} onValueChange={setSection}>
+                          <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Select a section" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Sections.map((sec) => (
+                              <SelectItem key={sec} value={sec}>{sec}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="year" className="text-right">
                           Year
                         </Label>
-                        <Input
-                          id="year"
-                          value={year}
-                          onChange={(e) => setYear(e.target.value)}
-                          className="col-span-3"
-                        />
+                        <Select value={year} onValueChange={setYear}>
+                          <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Select a year" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Years.map((y) => (
+                              <SelectItem key={y} value={y}>{y}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
-                    <Button onClick={handleProfileUpdate}>Save</Button>
+                    <Button
+                      className="mt-4"
+                      variant="outline"
+                      onClick={handleProfileUpdate}
+                    >
+                      Save
+                    </Button>
                   </DialogContent>
                 </Dialog>
               </CardContent>
