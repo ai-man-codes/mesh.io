@@ -8,52 +8,83 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
+  id           String       @id @default(cuid())
+  email        String       @unique
+  name         String?
+  department   String?
+  section      String?
+  year         String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Department    String?
-  Section       String?
-  Year          String?
-  proposals Proposal[]
-  vacancies Vacancy[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  proposals    Proposal[]
+  vacancies    Vacancy[]
+  sentMessages Message[]    @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+
+  conversations1 Conversation[] @relation("User1Conversations")
+  conversations2 Conversation[] @relation("User2Conversations")
 }
 
-model Event{
-  id String @id @default(cuid())
-  name String
-  image_url String
+model Event {
+  id          String   @id @default(cuid())
+  name        String
+  imageUrl    String
   description String
-  start_date DateTime
-  end_date DateTime
+  startDate   DateTime
+  endDate     DateTime
 }
 
 model Vacancy {
-  id          String   @id @default(cuid())
-  createdby   User      @relation(fields: [userId], references: [id])
-  userId      String
-  role        String // e.g., "Frontend Dev", "Designer"
-  description String?
-  isOpen      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  vacantTill  DateTime?
-  vacancy_image String?
-  proposals Proposal[]
+  id           String     @id @default(cuid())
+  createdBy    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  role         String
+  description  String?
+  isOpen       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  vacantTill   DateTime?
+  vacancyImage String?
+
+  proposals    Proposal[]
 }
 
 model Proposal {
   id        String         @id @default(cuid())
-  message   String? // e.g., "I have 2 years experience in React"
+  message   String?
   status    ProposalStatus @default(PENDING)
   createdAt DateTime       @default(now())
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   vacancyId String
-  vacancy   Vacancy @relation(fields: [vacancyId], references: [id])
+  vacancy   Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+}
+
+model Conversation {
+  id               String   @id @default(cuid())
+  userInvolved1Id  String
+  userInvolved2Id  String
+
+  userInvolved1    User     @relation("User1Conversations", fields: [userInvolved1Id], references: [id], onDelete: Cascade)
+  userInvolved2    User     @relation("User2Conversations", fields: [userInvolved2Id], references: [id], onDelete: Cascade)
+
+  messages         Message[]
+}
+
+model Message {
+  id           String   @id @default(cuid())
+  messageText  String
+  senderId     String
+  receiverId   String
+
+  sender       User     @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver     User     @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  conversationId String?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 }
 
 enum ProposalStatus {

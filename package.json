@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx esrun server.ts",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+     "start": "next start",
+     "start": "NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -66,7 +67,6 @@
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.4",
     "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
     "sonner": "^1.7.4",
     "svelte": "latest",
     "tailwind-merge": "^2.5.5",
