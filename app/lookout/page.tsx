@@ -341,10 +341,10 @@ export default function LookoutPage() {
                   <div className="flex items-start gap-4">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
                       {/* <Briefcase className="w-8 h-8 text-primary" /> */}
-                      <img src={vacancy.vacancy_image}/>
+                      <img src={vacancy.vacancy_image} className="rounded-full"/>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg text-foreground truncate">{vacancy.role}</h3>
+                      <h3 className="font-semibold text-lg text-foreground truncate w-3/4">{vacancy.role}</h3>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                         <Mail className="w-4 h-4" />
                         {vacancy.createdby.email}

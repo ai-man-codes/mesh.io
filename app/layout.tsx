@@ -46,13 +46,13 @@ export default function RootLayout({
                   </div>
                   <div className="flex-grow flex items-center justify-center gap-3">
                     <Link href="/event" className=''>
-                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-full px-4 py-2">Events</span>
+                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-3xl px-4 py-2">Events</span>
                     </Link>
                     <Link href="/dashboard">
-                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-full px-4 py-2">Dashboard</span>
+                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-3xl px-4 py-2">Dashboard</span>
                     </Link>
                     <Link href="/lookout">
-                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-full px-4 py-2">Opportunities</span>
+                      <span className="text-foreground transition-colors duration-300 hover:text-background hover:bg-foreground rounded-3xl px-4 py-2">Opportunities</span>
                     </Link>
                   </div>
                   <div className="flex items-center gap-4">
